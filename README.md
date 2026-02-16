@@ -4,17 +4,31 @@
 
 This project implements a **Static Branch Predictor** integrated with a pipelined **RISC-V processor datapath**.
 
-The predictor reduces control hazards by applying predefined static branch prediction rules based on branch direction.
-
-Static branch prediction is a simple yet effective technique to improve pipeline performance by making fixed assumptions about branch behavior.
+The predictor reduces **control hazards** by applying predefined static branch prediction rules based on branch direction. Static prediction improves pipeline efficiency by making fixed assumptions about branch behavior without requiring runtime history.
 
 ---
 
-## 🏗️ Architecture Diagram
+## 🏗️ Architecture Diagrams
 
-![Architecture Diagram](Docs/architecture.png)
+### 🔹 Top-Level Integration
 
-The static branch predictor is integrated within the control path of the processor and assists in early branch decision making to minimize pipeline stalls.
+![Top Level Architecture](Docs/block_diagram.png)
+
+This diagram shows the integration of the static branch predictor within the RISC-V processor.
+The predictor interacts with the Program Counter (PC), control logic, and branch target computation to minimize pipeline stalls.
+
+---
+
+### 🔹 Branch Predictor Logic Detail
+
+![Branch Predictor Logic](Docs/block_diagram2.png)
+
+This diagram illustrates the internal prediction mechanism based on comparison between:
+
+* Current Program Counter (PC)
+* Branch Target Address
+
+The direction of the branch determines the prediction signal.
 
 ---
 
@@ -25,43 +39,46 @@ The implemented predictor follows classical static branch prediction rules:
 * ✅ **Forward Branch → Predicted NOT Taken**
 * ✅ **Backward Branch → Predicted Taken**
 
-Backward branches typically represent loops, therefore predicting them as taken improves execution efficiency.
+Backward branches typically represent loops; therefore, predicting them as taken improves execution efficiency and reduces control penalties.
 
 ---
 
 ## ⚙️ Design Description
 
-The predictor determines branch direction by comparing:
+The predictor determines branch direction using:
 
 * Current Program Counter (PC)
-* Branch Target Address
+* Computed Branch Target Address
 
 ### Prediction Logic
 
 * If `Target Address < Current PC` → **Backward Branch → Taken**
 * If `Target Address > Current PC` → **Forward Branch → Not Taken**
 
-The prediction signal is generated combinationally and integrated into the processor control flow.
+The prediction signal is generated combinationally and integrated into the processor control path.
 
 ---
 
-## 📈 Simulation Results
+## 📈 Simulation & Verification
 
-![Waveform Output](Docs/waveform.png)
+The design was verified using a dedicated SystemVerilog testbench.
 
-Waveform analysis verifies:
+Verification confirmed:
 
 * Correct branch direction detection
 * Accurate prediction signal generation
-* Proper integration with pipeline behavior
+* Proper pipeline support behavior
+* Expected PC update mechanism
+
+Waveforms were analyzed using GTKWave to validate prediction accuracy under multiple branch scenarios.
 
 ---
 
 ## 🛠️ Tools & Technologies Used
 
 * SystemVerilog
-* ModelSim / Vivado
-* GTKWave
+* ModelSim / Vivado (Simulation & Verification)
+* GTKWave (Waveform Analysis)
 
 ---
 
@@ -70,10 +87,24 @@ Waveform analysis verifies:
 ```
 RISC-V-Static-Branch-Predictor/
 │
-├── RTL/
-├── Testbench/
-├── Memories/
-├── Docs/
+├── RTL/                 # SystemVerilog source files
+│   ├── top.sv
+│   ├── ALU.sv
+│   ├── CONTROL_UNIT.sv
+│   ├── static_branchpredictor.sv
+│   ├── data_mem.sv
+│   └── instr_mem.sv
+│
+├── Testbench/           # Testbench files
+│   └── testbench.sv
+│
+├── Memories/            # Memory initialization files
+│   └── inst.mem
+│
+├── Docs/                # Architecture diagrams & documentation
+│   ├── block_diagram.png
+│   └── block_diagram2.png
+│
 └── README.md
 ```
 
@@ -83,8 +114,8 @@ RISC-V-Static-Branch-Predictor/
 
 * RISC-V Processor Design
 * Pipeline Hazard Reduction
-* Microarchitecture Exploration
-* Educational RTL-Based CPU Design
+* Processor Microarchitecture Optimization
+* Educational RTL-Based CPU Development
 
 ---
 
@@ -92,8 +123,8 @@ RISC-V-Static-Branch-Predictor/
 
 * Dynamic Branch Prediction
 * Branch Target Buffer (BTB)
-* Performance comparison with dynamic predictors
-* Integration with full 5-stage pipelined RISC-V core
+* Performance comparison between static and dynamic predictors
+* Integration into a complete 5-stage pipelined RISC-V core
 
 ---
 
@@ -101,7 +132,6 @@ RISC-V-Static-Branch-Predictor/
 
 **Wayna Ali**
 Electronics Engineering Student
-Interest Areas: RTL Design, IC Design, Processor Microarchitecture
-
+Focus Areas: RTL Design, IC Design, Processor Microarchitecture
 
 
