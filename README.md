@@ -131,7 +131,7 @@ RISC-V-Static-Branch-Predictor/
 ## 👩‍💻 Author
 
 **Wayna Ali**
-Electronics Engineering Student
+Electronics Student
 Focus Areas: RTL Design, IC Design, Processor Microarchitecture
 
 
