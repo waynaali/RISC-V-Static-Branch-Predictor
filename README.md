@@ -2,9 +2,19 @@
 
 ## 📌 Overview
 
-This project implements a **Static Branch Predictor** for a pipelined **RISC-V processor**. The predictor reduces control hazards by applying predefined static branch prediction rules based on branch direction.
+This project implements a **Static Branch Predictor** integrated with a pipelined **RISC-V processor datapath**.
+
+The predictor reduces control hazards by applying predefined static branch prediction rules based on branch direction.
 
 Static branch prediction is a simple yet effective technique to improve pipeline performance by making fixed assumptions about branch behavior.
+
+---
+
+## 🏗️ Architecture Diagram
+
+![Architecture Diagram](Docs/architecture.png)
+
+The static branch predictor is integrated within the control path of the processor and assists in early branch decision making to minimize pipeline stalls.
 
 ---
 
@@ -28,52 +38,44 @@ The predictor determines branch direction by comparing:
 
 ### Prediction Logic
 
-* If Target Address < Current PC → Branch is **Backward → Taken**
-* If Target Address > Current PC → Branch is **Forward → Not Taken**
+* If `Target Address < Current PC` → **Backward Branch → Taken**
+* If `Target Address > Current PC` → **Forward Branch → Not Taken**
+
+The prediction signal is generated combinationally and integrated into the processor control flow.
 
 ---
 
-## 🏗️ Architecture Integration
+## 📈 Simulation Results
 
-The branch predictor is designed to work with a pipelined RISC-V processor and helps in:
+![Waveform Output](Docs/waveform.png)
 
-* Reducing control hazards
-* Improving instruction throughput
-* Supporting efficient pipeline execution
+Waveform analysis verifies:
+
+* Correct branch direction detection
+* Accurate prediction signal generation
+* Proper integration with pipeline behavior
 
 ---
 
 ## 🛠️ Tools & Technologies Used
 
-* Verilog / SystemVerilog
-* Vivado / ModelSim (Simulation & Verification)
-* GTKWave (Waveform Visualization)
+* SystemVerilog
+* ModelSim / Vivado
+* GTKWave
 
 ---
 
 ## 📂 Project Structure
 
 ```
-Static-Branch-Predictor/
+RISC-V-Static-Branch-Predictor/
 │
-├── RTL/                # Verilog/SystemVerilog source files
-├── Testbench/          # Testbench files
-├── Waveforms/          # Simulation waveform results
-├── Docs/               # Design explanation and notes
+├── RTL/
+├── Testbench/
+├── Memories/
+├── Docs/
 └── README.md
 ```
-
----
-
-## ▶️ Simulation & Verification
-
-The design was verified using testbenches to ensure correct branch prediction behavior under different branch conditions.
-
-Waveforms were analyzed to confirm:
-
-* Correct branch direction detection
-* Accurate prediction signal generation
-* Proper pipeline support behavior
 
 ---
 
@@ -81,8 +83,8 @@ Waveforms were analyzed to confirm:
 
 * RISC-V Processor Design
 * Pipeline Hazard Reduction
-* Microarchitecture Optimization
-* Educational Processor Development
+* Microarchitecture Exploration
+* Educational RTL-Based CPU Design
 
 ---
 
@@ -90,8 +92,8 @@ Waveforms were analyzed to confirm:
 
 * Dynamic Branch Prediction
 * Branch Target Buffer (BTB)
-* Performance Comparison with Dynamic Predictors
-* Integration with Full Pipelined RISC-V Core
+* Performance comparison with dynamic predictors
+* Integration with full 5-stage pipelined RISC-V core
 
 ---
 
@@ -100,5 +102,6 @@ Waveforms were analyzed to confirm:
 **Wayna Ali**
 Electronics Engineering Student
 Interest Areas: RTL Design, IC Design, Processor Microarchitecture
+
 
 
